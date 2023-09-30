@@ -5,6 +5,8 @@ import styles from './TodoList.module.css';
 import styless from './Todo.module.css';
 import Todo from './Todo';
 import { Button, Input } from 'antd';
+import { useDispatch } from 'react-redux';
+import { editTodo } from './store/todoSlice';
 
 interface ITodoList {
   todos: string[];
@@ -13,24 +15,20 @@ interface ITodoList {
 }
 
 const TodoList = ({ todos, deleteTodo, setTodos }: ITodoList) => {
+  const dispatch = useDispatch()
   const [editText, setEditText] = useState<number | null | string>(null);
   const [value, setValue] = useState<string>('');
   const todoId = new Date().getTime();
 
-  const editTodo = (index: number, todo: string) => {
+  const editTodoValue = (index: number, todo: string) => {
     setEditText(index);
     setValue(todo);
   };
 
   const saveTodo = (index: number) => {
-    let newTodo = todos.map((item, idx) => {
-      if (idx === index) {
-        item = value;
-      }
-      setValue(item);
-    });
-    setTodos(newTodo);
+   dispatch(editTodo({index, value}))
     setEditText(null);
+    // setValue("")        
   };
 
   return (
@@ -52,7 +50,7 @@ const TodoList = ({ todos, deleteTodo, setTodos }: ITodoList) => {
             todo={todo}
             index={index}
             deleteTodo={deleteTodo}
-            editTodo={editTodo}
+            editTodo={editTodoValue}
           />
         )
       )}
