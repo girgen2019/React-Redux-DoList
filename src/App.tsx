@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+/** @format */
+
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import TodoForm from './Components/TodoForm';
+import TodoList from './Components/TodoList';
 import './App.css';
+import { RootState } from './Components/store/store';
+import { addTodo } from './Components/store/todoSlice';
+import { removeTodo } from './Components/store/todoSlice';
+
 
 function App() {
+  const todos = useSelector((state: RootState)=> state.todos);
+  const dispatch = useDispatch()
+  const [, setTodos] = useState<string[]>([]);
+
+  const addTodoHandler = (text: string) => {
+    dispatch(addTodo(text));
+  };
+
+  const deleteTodoHendler = (index: number) => {
+    dispatch(removeTodo(index));
+  };
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App-header">
+      <h1>Todo App</h1>
+      <TodoForm addTodo={addTodoHandler} />
+      <TodoList
+        todos={todos}
+        setTodos={setTodos}
+        deleteTodo={deleteTodoHendler}
+      />
+      
     </div>
   );
 }
