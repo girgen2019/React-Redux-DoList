@@ -1,59 +1,68 @@
 /** @format */
 
-import { useState } from 'react';
+import { lazy, useState } from 'react';
 import styles from './TodoList.module.css';
 import styless from './Todo.module.css';
 import Todo from './Todo';
 import { Button, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { editTodo } from './store/todoSlice';
+import { title } from 'process';
 
 interface ITodoList {
-  todos: string[];
+  todos: any;
   setTodos: any;
-  deleteTodo: (index: number) => void;
+  deleteTodo: (index: string) => void;
 }
 
 const TodoList = ({ todos, deleteTodo, setTodos }: ITodoList) => {
   const dispatch = useDispatch()
   const [editText, setEditText] = useState<number | null | string>(null);
   const [value, setValue] = useState<string>('');
-  const todoId = new Date().getTime();
+  
 
-  const editTodoValue = (index: number, todo: string) => {
-    setEditText(index);
+  const editTodoValue = (id: number, todo: string) => {
+    setEditText(id);
     setValue(todo);
+
   };
 
-  const saveTodo = (index: number) => {
-   dispatch(editTodo({index, value}))
-    setEditText(null);
-    // setValue("")        
+  const saveTodo = (id: string, value:string) => {
+   dispatch(editTodo({id, value}))
+   
+  //  todo = value
+
+
+   setValue(value)
+   setEditText(null);
   };
+console.log("todos", todos);
 
   return (
     <div className={styles.todoListContainer}>
       {!todos.length && <h2>Todo list is empty</h2>}
-      {todos.map((todo, index) =>
-        editText == index ? (
+      {todos.map((todo:any, index:any) =>
+        editText == todo.id ? (
           <div className={styless.todo}>
             <div>
               <Input value={value} onChange={(e) => setValue(e.target.value)} />
             </div>
             <div>
-              <Button onClick={() => saveTodo(index)}>save</Button>
+              <Button onClick={() => saveTodo(todo.id, value)}>save</Button>
             </div>
           </div>
         ) : (
           <Todo
-            key={todoId + index}
-            todo={todo}
-            index={index}
-            deleteTodo={deleteTodo}
-            editTodo={editTodoValue}
+          key={todo.id}
+          todo={todo.title}
+          index={todo.id}
+          deleteTodo={deleteTodo}
+          editTodo={editTodoValue}
+          value={value}
           />
-        )
-      )}
+          )
+          )}
+          <div>{value}</div>
     </div>
   );
 };

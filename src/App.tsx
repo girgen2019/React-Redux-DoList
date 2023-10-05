@@ -11,16 +11,17 @@ import { removeTodo } from './Components/store/todoSlice';
 
 
 function App() {
-  const todos = useSelector((state: RootState)=> state.todos);
+  const todos = useSelector((state: RootState)=> state);
+  
   const dispatch = useDispatch()
   const [, setTodos] = useState<string[]>([]);
-
-  const addTodoHandler = (text: string) => {
-    dispatch(addTodo(text));
+  
+  const addTodoHandler = (title: string) => {
+    dispatch(addTodo(title));
   };
 
-  const deleteTodoHendler = (index: number) => {
-    dispatch(removeTodo(index));
+  const deleteTodoHendler = (id: string) => {
+    dispatch(removeTodo(id));
   };
 
 

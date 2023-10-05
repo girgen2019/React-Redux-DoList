@@ -32,7 +32,7 @@ const TodoForm = ({ addTodo }: ITodoForm) => {
         <Form.Item name={'myName'}>
           <Input placeholder="Enter new todo..." ref={textInput} />
         </Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" >
           Submit
         </Button>
       </Form>

@@ -1,5 +1,9 @@
 .todo {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat( auto-fill,50% 15% 15% 15%);
+    grid-column-gap: 5px;
+    justify-items: stretch;
+    align-items: stretch;
     align-items: center;
     padding: 10px 20px;
     margin: 15px 0;
