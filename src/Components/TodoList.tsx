@@ -8,9 +8,11 @@ import { Button, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { editTodo } from './store/todoSlice';
 import { title } from 'process';
+import { useRef } from 'react';
+
 
 interface ITodoList {
-  todos: any;
+  todos: any ;
   setTodos: any;
   deleteTodo: (index: string) => void;
 }
@@ -19,6 +21,7 @@ const TodoList = ({ todos, deleteTodo, setTodos }: ITodoList) => {
   const dispatch = useDispatch()
   const [editText, setEditText] = useState<number | null | string>(null);
   const [value, setValue] = useState<string>('');
+  const valueRef = useRef<string>()
   
 
   const editTodoValue = (id: number, todo: string) => {
@@ -29,14 +32,9 @@ const TodoList = ({ todos, deleteTodo, setTodos }: ITodoList) => {
 
   const saveTodo = (id: string, value:string) => {
    dispatch(editTodo({id, value}))
-   
-  //  todo = value
-
-
    setValue(value)
    setEditText(null);
   };
-console.log("todos", todos);
 
   return (
     <div className={styles.todoListContainer}>
@@ -62,7 +60,6 @@ console.log("todos", todos);
           />
           )
           )}
-          <div>{value}</div>
     </div>
   );
 };

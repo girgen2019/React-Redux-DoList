@@ -23,7 +23,6 @@ export const todoSlice = createSlice({
     },
     editTodo: (state, action) => {
       const {id, value} =  action.payload
-      console.log("index, value", id, value);
       
       return state.map((todo) => 
         todo.id === id ? {...todo, title:value} : todo)
